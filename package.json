@@ -18,11 +18,15 @@
   },
   "homepage": "https://github.com/andru1236/mock-gateway#readme",
   "dependencies": {
+    "apollo-server": "^2.21.1",
     "apollo-server-express": "^2.21.1",
     "express": "^4.17.1",
     "express-graphql": "^0.12.0",
     "graphql": "^15.5.0",
     "graphql-tag": "^2.11.0",
     "graphql-tools": "^7.0.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }

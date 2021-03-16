@@ -1,8 +1,10 @@
 const express = require('express');
 const app = express();
+const server = require('./server/serverHttp');
 
-var { graphqlHTTP } = require('express-graphql');
-var { buildSchema } = require('graphql');
+server.applyMiddleware({ app });
 
-
-app.listen(4001, () => console.log('server on port 4001'));
+// GraphQL run with apollo server 
+app.listen({ port: 4000 }, () =>
+  console.log('Now browse to http://localhost:4000' + server.graphqlPath)
+);

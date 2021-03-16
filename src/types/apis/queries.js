@@ -1,0 +1,3 @@
+const getApi = GraphQLInputObjectType({
+    params
+})
