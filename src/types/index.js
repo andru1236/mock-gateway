@@ -1,11 +1,20 @@
-//const Apis = require('./apis');
-const { gql } = require('apollo-server-express');
-const apisType = require('./apis');
-const responseType = require('./responses');
+import { gql } from 'apollo-server-express';
+import apisType from './apis/index.js';
+import responseType from './responses/index.js';
 
 const typeDefs = gql`
-    ${apisType}
-    ${responseType}
+  scalar JSON
+
+  # The Query schema
+  type Query {
+    api(_id: String!): Api
+    apis: [Api]
+    response(_id: String!): Response
+    responses: [Response]
+  }
+  # Include schemas
+  ${apisType}
+  ${responseType}
 `;
 
-module.exports = typeDefs;
+export {typeDefs};
