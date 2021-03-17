@@ -1,6 +1,7 @@
-const express = require('express');
+import express from 'express';
+import {server} from './server/serverHttp.js';
+
 const app = express();
-const server = require('./server/serverHttp');
 
 server.applyMiddleware({ app });
 

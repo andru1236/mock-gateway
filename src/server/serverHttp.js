@@ -1,5 +1,7 @@
-const { ApolloServer } = require('apollo-server-express');
-const typeDefs = require('../types');
-const resolvers = require('../resolvers');
+import { ApolloServer } from 'apollo-server-express';
+import { schemaDefs } from './schemaBuider.js';
+
 // GraphQL server
-module.exports =  new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer(schemaDefs);
+
+export {server};
