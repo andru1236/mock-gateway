@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-express';
-import apisType from './apis/index.js';
-import responseType from './responses/index.js';
+import apisType from './apis/queries.js';
+import responseType from './responses/queries.js';
 
 const typeDefs = gql`
   scalar JSON
