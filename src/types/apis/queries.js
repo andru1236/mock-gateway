@@ -1,23 +1,28 @@
 import { gql } from 'apollo-server-express';
 
-const apiSchema = gql`
+const apiTypes = gql`
   # The API schema
   type Api {
-      _id: String
-      name: String
-      port: Int
-      routes: [Route]
-      settings: Setting
+    _id: String
+    name: String
+    port: Int
+    routes: [Route]
+    settings: Setting
   }
   type Route {
-      _id: String
-      path: String
-      resources: JSON
+    _id: String
+    path: String
+    resources: JSON
   }
   type Setting {
-      enabled: Boolean
-      created_on: String
+    enabled: Boolean
+    created_on: String
   }
 `;
 
-export default apiSchema;
+const apiQuery = `
+  api(_id: String!): Api
+  apis: [Api]
+`;
+
+export {apiTypes, apiQuery};
