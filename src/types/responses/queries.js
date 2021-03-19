@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-express';
 
-const responseSchema = gql`
+const responseTypes = gql`
   # The Response schema
   type Response {
     _id: String
@@ -20,4 +20,9 @@ const responseSchema = gql`
   }
 `;
 
-export default responseSchema;
+const responseQuery = `
+  response(_id: String!): Response
+  responses: [Response]
+`;
+
+export {responseTypes, responseQuery};

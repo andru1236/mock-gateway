@@ -13,7 +13,6 @@ class ServerData {
     fetch(process.env.BASE_BACKEND_URL + 'apis')
       .then(response => response.json())
       .then((data) => {
-        console.log(data.meta);
         if (data.meta.statusCode == 200) {
           this.dataApi = data.data;
         }
