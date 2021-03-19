@@ -2,14 +2,25 @@ import { ServerData } from '../../data/serverData.js';
 const serverData = new ServerData();
 
 const apiMutations = {
-  createAPI: (parent, args, context, info) => {
-    return "Api created successfully!";
+  createAPI: async (parent, args, context, info) => {
+    let apiBody = {
+      name: args.name,
+      port: args.port
+    };
+    // create api data
+    return await serverData.postApiData(apiBody);
   },
-  updateAPI: (parent, args, context, info) => {
-    return "Api updated successfully!";
+  updateAPI: async (parent, args, context, info) => {
+    let apiBody = {
+      name: args.name,
+      port: args.port
+    };
+    // update api data
+    return await serverData.putApiData(args.apiId, apiBody);
   },
-  removeAPI: (parent, args, context, info) => {
-    return "Api removed successfully!";
+  removeAPI: async (parent, args, context, info) => {
+    // remove api data
+    return await serverData.deleteApiData(args.apiId);
   },
   createRoute: (parent, args, context, info) => {
     return "Route created successfully!";
