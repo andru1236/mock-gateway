@@ -6,13 +6,27 @@ const apiTypes = gql`
     _id: String
     name: String
     port: Int
-    routes: [Route]
+    routes: [Path]
     settings: Setting
   }
-  type Route {
+  type Path {
     _id: String
     path: String
-    resources: JSON
+    resources: [Resource]
+  }
+  type Resource {
+    method: String
+    response: JSON
+    params: [Param]
+  }
+  type Param {
+    param: String
+    response: JSON
+  }
+  type Route {
+    path: String
+    method: String
+    response: JSON
   }
   type Setting {
     enabled: Boolean
