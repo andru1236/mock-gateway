@@ -1,4 +1,4 @@
-import {mongoDb} from './mongoData.js';
+import {mongoDb, ObjectId} from './mongoData.js';
 import fetch from 'node-fetch';
 import dotenv from './environment.js';
 class ServerData {
@@ -82,12 +82,36 @@ class ServerData {
     }
   }
 
+  async getApiById (apiId) {
+    let apiData = mongoDb.getApis();
+
+    if (apiData) {
+      let api = await apiData.findOne(ObjectId(apiId));
+      return api;
+    }
+    else {
+      return { status: 404, message : "error" };
+    }
+  }
+
   async getResponseData () {
     let responseData = mongoDb.getResponses();
 
     if (responseData) {
       let responses = await responseData.find({}).toArray();
       return responses;
+    }
+    else {
+      return { status: 404, message : "error" };
+    }
+  }
+
+  async getResponseById (responseId) {
+    let responseData = mongoDb.getResponses();
+
+    if (responseData) {
+      let res = await responseData.findOne(ObjectId(responseId));
+      return res;
     }
     else {
       return { status: 404, message : "error" };

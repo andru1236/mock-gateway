@@ -1,7 +1,7 @@
 import pkg from 'mongodb';
 import dotenv from './environment.js';
 
-const {MongoClient} = pkg;
+const {MongoClient, ObjectId} = pkg;
 const clientDb = await MongoClient.connect(process.env.MONGO_URL, {useUnifiedTopology: true});
 const db = clientDb.db(process.env.MONGO_DB);
 
@@ -14,4 +14,4 @@ const mongoDb = {
     }
 };
 
-export {mongoDb};
+export {mongoDb, ObjectId};
