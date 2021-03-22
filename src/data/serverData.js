@@ -1,12 +1,9 @@
+import {mongoDb} from './mongoData.js';
 import fetch from 'node-fetch';
-import dotenv from 'dotenv';
-
+import dotenv from './environment.js';
 class ServerData {
   
   constructor () {
-    dotenv.config();
-    this.getApiData();
-    this.getResponseData();
   }
 
   async postApiData (apiBody) {
@@ -73,38 +70,28 @@ class ServerData {
     });
   }
 
-  getApiData () {
-    fetch(process.env.BASE_BACKEND_URL + 'apis')
-      .then(response => response.json())
-      .then((data) => {
-        if (data.meta.statusCode == 200) {
-          this.dataApi = data.data;
-        }
-        else {
-          this.dataApi = { status: 404, message : "error" };
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        this.dataApi = { status: 500, message : "error" };
-      });
+  async getApiData () {
+    let apiData = mongoDb.getApis();
+
+    if (apiData) {
+      let apis = await apiData.find({}).toArray();
+      return apis;
+    }
+    else {
+      return { status: 404, message : "error" };
+    }
   }
 
-  getResponseData () {
-    fetch(process.env.BASE_BACKEND_URL + 'responses')
-      .then(response => response.json())
-      .then((data) => {
-        if (data.meta.statusCode == 200) {
-          this.dataResponse = data.data;
-        }
-        else {
-          this.dataResponse = { status: 404, message : "error" };
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        this.dataResponse = { status: 500, message : "error" };
-      });
+  async getResponseData () {
+    let responseData = mongoDb.getResponses();
+
+    if (responseData) {
+      let responses = await responseData.find({}).toArray();
+      return responses;
+    }
+    else {
+      return { status: 404, message : "error" };
+    }
   }
 }
 
