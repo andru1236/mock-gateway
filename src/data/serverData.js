@@ -15,7 +15,7 @@ class ServerData {
     })
     .then(res => res.json())
     .then((data) => {
-      if (data.meta && data.meta.statusCode == 201) {
+      if (data.meta && (data.meta.statusCode == 201 || data.meta.statusCode == 200)) {
         return { status: 201, data: data.data };
       }
       else {
@@ -54,10 +54,11 @@ class ServerData {
     return response;
   }
 
-  async delete (dataUrl) {
+  async delete (dataBody, dataUrl) {
     // delete api data
     let response = await fetch(process.env.BASE_BACKEND_URL + dataUrl, {
-      method: 'DELETE'
+      method: 'DELETE',
+      body: JSON.stringify(dataBody)
     })
     .then(res => res.json())
     .then((data) => {
