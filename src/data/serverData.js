@@ -6,68 +6,74 @@ class ServerData {
   constructor () {
   }
 
-  async postApiData (apiBody) {
+  async post (dataBody, dataUrl) {
     // post api data
-    fetch(process.env.BASE_BACKEND_URL + 'apis', {
+    let response = await fetch(process.env.BASE_BACKEND_URL + dataUrl, {
       method: 'POST',
-      body: JSON.stringify(apiBody),
+      body: JSON.stringify(dataBody),
       headers: { 'Content-Type': 'application/json' }
     })
-    .then(response => response.json())
+    .then(res => res.json())
     .then((data) => {
       if (data.meta && data.meta.statusCode == 201) {
         return { status: 201, data: data.data };
       }
       else {
-        return { status: 404, message : "error" };
+        return { status: 404, message : "Error on post new data." };
       }
     })
     .catch((err) => {
       console.log(err);
-      return { status: 500, message : "error" };
+      return { status: 500, message : "Error trying to post with server data." };
     });
+
+    return response;
   }
 
-  async putApiData (apiId, apiBody) {
+  async put (dataBody, dataUrl) {
     // update api data
-    fetch(process.env.BASE_BACKEND_URL + 'apis/' + apiId, {
+    let response = await fetch(process.env.BASE_BACKEND_URL + dataUrl, {
       method: 'PUT',
-      body: JSON.stringify(apiBody),
+      body: JSON.stringify(dataBody),
       headers: { 'Content-Type': 'application/json' }
     })
-    .then(response => response.json())
+    .then(res => res.json())
     .then((data) => {
       if (data.meta && data.meta.statusCode == 200) {
         return { status: 200, data: data.data };
       }
       else {
-        return { status: 404, message : "error" };
+        return { status: 404, message : "Error on put data." };
       }
     })
     .catch((err) => {
       console.log(err);
-      return { status: 500, message : "error" };
+      return { status: 500, message : "Error trying to put with server data." };
     });
+
+    return response;
   }
 
-  async deleteApiData (apiId) {
+  async delete (dataUrl) {
     // delete api data
-    fetch(process.env.BASE_BACKEND_URL + 'apis/' + apiId, {
+    let response = await fetch(process.env.BASE_BACKEND_URL + dataUrl, {
       method: 'DELETE'
     })
-    .then(response => response.json())
+    .then(res => res.json())
     .then((data) => {
       if (data.meta && data.meta.statusCode == 200) {
         return { status: 200, data: data.data };
       }
       else {
-        return { status: 404, message : "error" };
+        return { status: 404, message : "Error on delete data." };
       }
     })
     .catch((err) => {
       console.log(err);
-      return { status: 500, message : "error" };
+      return { status: 500, message : "Error trying to delete with server data." };
     });
+
+    return response;
   }
 }
 

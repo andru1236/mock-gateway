@@ -8,19 +8,27 @@ const apiMutations = {
       port: args.port
     };
     // create api data
-    return await serverData.postApiData(apiBody);
+    let res = await serverData.post(apiBody, 'apis');
+    return (res.status == 201) ? null : 
+      "Error " + res.status + " , Message : " + res.message;
   },
   updateAPI: async (parent, args, context, info) => {
+    let url = 'apis/' + args.apiId;
     let apiBody = {
       name: args.name,
       port: args.port
     };
     // update api data
-    return await serverData.putApiData(args.apiId, apiBody);
+    let res = await serverData.put(apiBody, url);
+    return (res.status == 200) ? null : 
+      "Error " + res.status + " , Message : " + res.message;
   },
   removeAPI: async (parent, args, context, info) => {
+    let url = 'apis/' + args.apiId;
     // remove api data
-    return await serverData.deleteApiData(args.apiId);
+    let res = await serverData.deleteApiData(url);
+    return (res.status == 200) ? null : 
+      "Error " + res.status + " , Message : " + res.message;
   },
   createRoute: (parent, args, context, info) => {
     return "Route created successfully!";
