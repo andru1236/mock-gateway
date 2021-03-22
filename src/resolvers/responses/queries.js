@@ -1,17 +1,28 @@
-import { ServerData } from '../../data/serverData.js';
-const serverData = new ServerData();
+import {mongoDb, ObjectId} from '../../data/mongoData.js';
 
 const responseQueries = {
-  response: (parent, args) => {
-    let id = args._id;
-    let res = serverData.dataResponse.responses.filter(response => {
-      return response._id == id;
-    })[0];
-    
-    return res;
+  response: async (parent, args) => {
+    let responseId = args._id;
+    let responseData = mongoDb.getResponses();
+
+    if (responseData) {
+      let res = await responseData.findOne(ObjectId(responseId));
+      return res;
+    }
+    else {
+      return { status: 404, message : "error" };
+    }
   },
-  responses: () => {
-    return serverData.dataResponse.responses;
+  responses: async () => {
+    let responseData = mongoDb.getResponses();
+
+    if (responseData) {
+      let responses = await responseData.find({}).toArray();
+      return responses;
+    }
+    else {
+      return { status: 404, message : "error" };
+    }
   }
 };
 
