@@ -28,6 +28,7 @@
     "graphql-tag": "^2.11.0",
     "graphql-tools": "^7.0.4",
     "graphql-type-json": "^0.3.2",
+    "mongodb": "^3.6.5",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
