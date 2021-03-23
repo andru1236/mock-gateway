@@ -16,7 +16,7 @@ class ServerData {
     .then(res => res.json())
     .then((data) => {
       if (data.meta && (data.meta.statusCode == 201 || data.meta.statusCode == 200)) {
-        return { status: 201, data: data.data };
+        return { status: data.meta.statusCode, data: data.data };
       }
       else {
         return { status: 404, message : "Error on post new data." };
