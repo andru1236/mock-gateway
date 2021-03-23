@@ -15,7 +15,7 @@ const apiMutations = {
   },
   // update api
   updateAPI: async (parent, args, context, info) => {
-    let url = 'apis/' + args.apiId;
+    const url = `apis/${args.apiId}`;
     let apiBody = {
       name: args.name,
       port: args.port
@@ -27,7 +27,7 @@ const apiMutations = {
   },
   // remove api
   removeAPI: async (parent, args, context, info) => {
-    let url = 'apis/' + args.apiId;
+    const url = `apis/${args.apiId}`;
     // remove api data
     let res = await serverData.delete({}, url);
     return (res.status == 200) ? "Api removed successfully!" : 
@@ -35,21 +35,21 @@ const apiMutations = {
   },
   // start api
   startAPI: async (parent, args, context, info) => {
-    let url = 'apis/' + args.apiId + '/start';
+    const url = `apis/${args.apiId}/start`;
     let res = await serverData.post({}, url);
     return (res.status == 200) ? "Api started successfully!" : 
       "Error " + res.status + " , Message : " + res.message;
   },
   // stop api
   stopAPI: async (parent, args, context, info) => {
-    let url = 'apis/' + args.apiId + '/stop';
+    const url = `apis/${args.apiId}/stop`;
     let res = await serverData.post({}, url);
     return (res.status == 200) ? "Api stopped successfully!" : 
       "Error " + res.status + " , Message : " + res.message;
   },
   // create route
   createRoute: async (parent, args, context, info) => {
-    let url = 'apis/' + args.apiId + '/routes';
+    const url = `apis/${args.apiId}/routes`;
     let body = {
       path: args.path,
       method: args.method,
@@ -62,7 +62,7 @@ const apiMutations = {
   },
   // update route
   updateRoute: async (parent, args, context, info) => {
-    let url = 'apis/' + args.apiId + '/routes';
+    const url = `apis/${args.apiId}/routes`;
     let body = {
       path: args.path,
       method: args.method,
@@ -75,7 +75,7 @@ const apiMutations = {
   },
   // remove route
   removeRoute: async (parent, args, context, info) => {
-    let url = 'apis/' + args.apiId + '/routes';
+    const url = `apis/${args.apiId}/routes`;
     let body = {
       path: args.path,
       method: args.method
@@ -87,7 +87,7 @@ const apiMutations = {
   },
   // create route params
   createRouteParams: async (parent, args, context, info) => {
-    let url = 'apis/' + args.apiId + '/routes/' + args.routeId + '/params';
+    const url = `apis/${args.apiId}/routes/${args.routeId}/params`;
     let body = {
       method: args.method,
       params: args.param,
@@ -100,7 +100,7 @@ const apiMutations = {
   },
   // update route params
   updateRouteParams: async (parent, args, context, info) => {
-    let url = 'apis/' + args.apiId + '/routes/' + args.routeId + '/params';
+    const url = `apis/${args.apiId}/routes/${args.routeId}/params`;
     let body = {
       method: args.method,
       params: args.param,
@@ -113,7 +113,7 @@ const apiMutations = {
   },
   // remove route params
   removeRouteParams: async (parent, args, context, info) => {
-    let url = 'apis/' + args.apiId + '/routes/' + args.routeId + '/params';
+    const url = `apis/${args.apiId}/routes/${args.routeId}/params`;
     let body = {
       method: args.method,
       params: args.param

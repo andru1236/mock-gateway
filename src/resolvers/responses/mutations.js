@@ -15,7 +15,7 @@ const responseMutations = {
   },
   //update response
   updateResponse: async (parent, args, context, info) => {
-    let url = 'responses/' + args.responseId;
+    const url = `responses/${args.responseId}`;
     let body = {
       name: args.name,
       response: args.response
@@ -27,7 +27,7 @@ const responseMutations = {
   },
   // remove response
   removeResponse: async (parent, args, context, info) => {
-    let url = 'responses/' + args.responseId;
+    const url = `responses/${args.responseId}`;
     // remove response data
     let res = await serverData.delete({}, url);
     return (res.status == 200) ? "Response removed successfully!" : 
@@ -35,7 +35,7 @@ const responseMutations = {
   },
   // assign response to api
   assignResponseToApi: async (parent, args, context, info) => {
-    let url = 'responses/' + args.responseId;
+    const url = `responses/${args.responseId}`;
     let body = {
       api_id: args.apiId,
       path: args.path,
@@ -43,7 +43,7 @@ const responseMutations = {
     };
     // assign response to api
     let res = await serverData.post(body, url);
-    return (res.status == 201) ? "Response assigned to Api successfully!" : 
+    return (res.status == 200) ? "Response assigned to Api successfully!" : 
       "Error " + res.status + " , Message : " + res.message;
   }
 };
