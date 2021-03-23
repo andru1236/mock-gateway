@@ -10,7 +10,7 @@ const apiMutations = {
     };
     // create api data
     let res = await serverData.post(apiBody, 'apis');
-    return (res.status == 201) ? null : 
+    return (res.status == 201) ? "Api created successfully!" : 
       "Error " + res.status + " , Message : " + res.message;
   },
   // update api
@@ -22,7 +22,7 @@ const apiMutations = {
     };
     // update api data
     let res = await serverData.put(apiBody, url);
-    return (res.status == 200) ? null : 
+    return (res.status == 200) ? "Api updated successfully!" : 
       "Error " + res.status + " , Message : " + res.message;
   },
   // remove api
@@ -30,7 +30,7 @@ const apiMutations = {
     let url = 'apis/' + args.apiId;
     // remove api data
     let res = await serverData.delete({}, url);
-    return (res.status == 200) ? null : 
+    return (res.status == 200) ? "Api removed successfully!" : 
       "Error " + res.status + " , Message : " + res.message;
   },
   // start api
