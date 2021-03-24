@@ -1,5 +1,5 @@
 const responseQuery = `
-  response(_id: String!): Response
+  response(id: String!): Response
   responses: [Response]
 `;
 

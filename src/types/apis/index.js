@@ -43,14 +43,14 @@ const SettingType = new GraphQLObjectType({
 const apiType = gql`
   # The API schema
   type Api {
-    _id: String
+    id: String
     name: String
     port: Int
     routes: [Path]
     settings: Setting
   }
   type Path {
-    _id: String
+    id: String
     path: String
     resources: [Resource]
   }
@@ -70,7 +70,7 @@ const apiType = gql`
   }
   type Setting {
     enabled: Boolean
-    created_on: String
+    createdOn: String
   }
 `;
 

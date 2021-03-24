@@ -1,4 +1,4 @@
-import { ServerData } from "../../infrastructure/serverData.js";
+import { ServerData } from "../../infrastructure/apiBridge";
 
 const serverData = new ServerData();
 

@@ -1,5 +1,5 @@
 const apiQuery = `
-  api(_id: String!): Api
+  api(id: String!): Api
   apis: [Api]
 `;
 

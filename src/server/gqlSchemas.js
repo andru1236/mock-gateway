@@ -1,5 +1,5 @@
 import typeDefs from "../types";
-import { resolvers } from "../resolvers/index.js";
+import resolvers from "../resolvers";
 
 const apolloSchema = {
   typeDefs,

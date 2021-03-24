@@ -43,14 +43,14 @@ const TrackingRouteType = new GraphQLObjectType({
 const responseType = gql`
   # The Response schema
   type Response {
-    _id: String
+    id: String
     name: String
     response: JSON
     tracking_assignation: TrackingAssignation
     created_on: String
   }
   type TrackingAssignation {
-    api_id: String
+    apiId: String
     routes: [TrackingRoute]
   }
   type TrackingRoute {

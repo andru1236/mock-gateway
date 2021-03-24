@@ -1,26 +1,14 @@
-import { mongoDb, ObjectId } from "../../infrastructure/mongoData.js";
+import { dbc, ObjectId } from "../../infrastructure";
 
 const api = async (parent, args) => {
-  let apiData = mongoDb.getApis();
-
-  if (apiData) {
-    let apiId = args._id;
-    let api = await apiData.findOne(ObjectId(apiId));
-    return api;
-  } else {
-    return { status: 404, message: "error" };
-  }
+  let apiData = dbc.apis();
+  const api = await dbc.findOne(ObjectId(args.id))
+  return api
 };
 
 const apis = async () => {
-  let apiData = mongoDb.getApis();
-
-  if (apiData) {
-    let apis = await apiData.find({}).toArray();
-    return apis;
-  } else {
-    return { status: 404, message: "error" };
-  }
+  return await dbc.apis.find({}).toArray();
+  
 };
 
 export default {

@@ -1,4 +1,6 @@
 import fetch from 'node-fetch';
+
+
 class ServerData {
   
   constructor () {
