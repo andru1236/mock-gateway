@@ -4,6 +4,9 @@ import { responseQueries, responseMutations } from "./responses";
 
 export default {
   JSON: GraphQLJSON,
+  
+  // add the models to resolve
+
 
   Query: {
     ...apiQueries,

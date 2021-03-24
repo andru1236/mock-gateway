@@ -35,15 +35,30 @@ export const executeApiBrige = async (
   try {
     const rawResponse = await fetch(IP_REST_API + mockApiPath, httpSetting);
     const cleanedResponse = await responseHandler(rawResponse);
-
     if (callback !== null) {
       return callback(cleanedResponse);
     }
     return cleanedResponse;
+    
   } catch (error) {
     return errorHandler(error);
   }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class ServerData {
   constructor() {}
