@@ -10,24 +10,17 @@ const Response = {
   response: (obj) => obj.response,
   trackingAssignation: async (obj) => {
     const trackingList = obj[dbTranslator.response.trackingAssignation];
-    const resolvedApis = await Promise.all(
-        trackingList.map(async (track) => {
+    
+    return trackingList.map(async (track) => {
+      const iteratorApi = await dal.searchAnApi(
+        track[dbTranslator.trackingAssignation.apiId]
+      );
 
-        const iteratorApi = await dal.searchAnApi(
-          track[dbTranslator.trackingAssignation.apiId]
-        );
-
-        return {
-          ...track,
-          api: iteratorApi,
-        };
-
-      })
-    );
-
-    console.log(resolvedApis);
-    console.log(resolvedApis[0].routes);
-    return resolvedApis;
+      return {
+        ...track,
+        api: iteratorApi,
+      };
+    });
   },
   createdOn: (obj) => obj[dbTranslator.createdOn],
 };
