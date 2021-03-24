@@ -1,12 +1,13 @@
 import { GraphQLJSON } from "graphql-type-json";
-import { apiQueries, apiMutations } from "./apis";
-import { responseQueries, responseMutations } from "./responses";
+import { Api, apiQueries, apiMutations } from "./apis";
+import { Response, responseQueries, responseMutations } from "./responses";
 
 export default {
   JSON: GraphQLJSON,
   
   // add the models to resolve
-
+  Api,
+  Response,
 
   Query: {
     ...apiQueries,

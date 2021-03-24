@@ -3,7 +3,7 @@ import apiTranslator from "./apiTranslator";
 
 const serverData = new ServerData();
 
-const createAPI = async (_, args) => {
+const createAPI = async (_, args, {loaders}) => {
   const body = {
     name: args.name,
     port: args.port,
@@ -11,13 +11,14 @@ const createAPI = async (_, args) => {
 
   const { mockApiPath, method } = apiTranslator.createApi;
 
+
   // Example callback
   const callback = (response) => {
     console.log(response);
     return response;
   };
 
-  return await executeApiBrige(mockApiPath, method, body, callback);
+  const result = await executeApiBrige(mockApiPath, method, body, callback);
 };
 
 const updateAPI = async (parent, args, context, info) => {
@@ -28,6 +29,7 @@ const updateAPI = async (parent, args, context, info) => {
   };
   // update api data
   let res = await serverData.put(apiBody, url);
+  context.loaders.apis.prime(res.id, res)
   return res.status == 200
     ? null
     : "Error " + res.status + " , Message : " + res.message;

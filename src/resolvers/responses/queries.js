@@ -1,10 +1,10 @@
-import { dbc, ObjectId } from "../../infrastructure";
+import dal from "./dal";
 
 const response = async (parent, args) => {
-    return await dbc.apis.findOne(ObjectId(args.id));
+  return await dal.searchAResponse(args.id);
 };
 const responses = async () => {
-    return await dbc.resonses.find({}).toArray();
+  return await dal.searchAllResponses();
 };
 
 export default { response, responses };

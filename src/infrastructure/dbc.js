@@ -12,7 +12,7 @@ const db = connection.db(process.env.MONGO_DB);
 
 const dbc = {
   apis: db.collection("apis"),
-  resonses: db.collection("responses")
+  responses: db.collection("responses")
 }
 
 export { dbc, ObjectId };
