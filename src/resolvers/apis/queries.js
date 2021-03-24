@@ -1,8 +1,10 @@
-import { dbc, ObjectId } from "../../infrastructure";
+import dao from './dao';
 
-const api = async (parent, args) => await dbc.apis.findOne(ObjectId(args.id));
+const api = async (parent, args) => {
+  return await dao.searchAnApi(args.id);
+};
 
-const apis = async () => await dbc.apis.find({}).toArray();
+const apis = async () => await dao.searchAllApis();
 
 export default {
   api,

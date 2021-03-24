@@ -1,5 +1,18 @@
 // Create all custom errors
 
-export const errors = {
-    // add all errors here
+class DatabaseError extends Error {
+  constructor(message) {
+    super(message);
+  }
 }
+
+class NoFoundError extends Error {
+  constructor(message) {
+    super(message);
+  }
+}
+
+export const errors = {
+  DatabaseError,
+  NoFoundError,
+};
