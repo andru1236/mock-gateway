@@ -1,19 +1,17 @@
-import { apiQueries } from './apis/queries.js';
-import { responseQueries } from './responses/queries.js';
-import { apiMutations } from './apis/mutations.js';
-import { responseMutations } from './responses/mutations.js';
-import { GraphQLJSON } from 'graphql-type-json';
+import { GraphQLJSON } from "graphql-type-json";
+import { apiQueries, apiMutations } from "./apis";
+import { responseQueries, responseMutations } from "./responses";
 
 export const resolvers = {
   JSON: GraphQLJSON,
 
   Query: {
     ...apiQueries,
-    ...responseQueries
+    ...responseQueries,
   },
 
   Mutation: {
     ...apiMutations,
-    ...responseMutations
-  }
+    ...responseMutations,
+  },
 };

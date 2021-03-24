@@ -10,7 +10,7 @@ const typeDefs = gql`
   ${responseType}
 
 
-  # The Query schema
+  # include Query schema
   type Query {
     ${apiQueries}
     ${responseQueries}

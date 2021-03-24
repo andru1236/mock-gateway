@@ -1,8 +1,9 @@
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
-import { schemaDefs } from "./schemaBuilder.js";
 
-const server = new ApolloServer(schemaDefs);
+import { apolloSchema } from "./gqlSchemas.js";
+
+const server = new ApolloServer(apolloSchema);
 const app = express();
 server.applyMiddleware({ app });
 

@@ -1,9 +1,9 @@
 import typeDefs from "../types";
 import { resolvers } from "../resolvers/index.js";
 
-const schemaDefs = {
+const apolloSchema = {
   typeDefs,
   resolvers,
 };
 
-export { schemaDefs };
+export { apolloSchema };
