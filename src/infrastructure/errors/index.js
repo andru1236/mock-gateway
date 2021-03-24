@@ -1,2 +1,2 @@
 export { errorHandler } from "./errorHandler";
-export { errors } from './customErrors';
+export { errors } from "./customErrors";

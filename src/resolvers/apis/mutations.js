@@ -1,17 +1,25 @@
-import { ServerData } from "../../infrastructure/apiBridge";
+import { ServerData, executeApiBrige } from "../../infrastructure";
+import apiTranslator from "./apiTranslator";
+
 const serverData = new ServerData();
 
-const createAPI = async (parent, args, context, info) => {
-  let apiBody = {
+const createAPI = async (_, args) => {
+  const body = {
     name: args.name,
     port: args.port,
   };
-  // create api data
-  let res = await serverData.post(apiBody, "apis");
-  return res.status == 201
-    ? null
-    : "Error " + res.status + " , Message : " + res.message;
+
+  const { mockApiPath, method } = apiTranslator.createApi;
+
+  // Example callback
+  const callback = (response) => {
+    console.log(response);
+    return response;
+  };
+
+  return await executeApiBrige(mockApiPath, method, body, callback);
 };
+
 const updateAPI = async (parent, args, context, info) => {
   let url = "apis/" + args.apiId;
   let apiBody = {

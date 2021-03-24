@@ -1,5 +1,5 @@
 // Create all custom errors
 
-export {
+export const errors = {
     // add all errors here
 }
