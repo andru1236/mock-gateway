@@ -1,21 +1,20 @@
-import { gql } from 'apollo-server-express';
-import { apiTypes, apiQuery } from './apis/queries.js';
-import { responseTypes, responseQuery } from './responses/queries.js';
-import { apiMutations } from './apis/mutations.js';
-import { responseMutations } from './responses/mutations.js';
+import { gql } from "apollo-server-express";
+import { apiType, apiMutations, apiQueries } from "./apis";
+import { responseType, responseMutations, responseQueries } from "./responses";
 
 const typeDefs = gql`
   scalar JSON
 
+  # Include schemas
+  ${apiType}
+  ${responseType}
+
+
   # The Query schema
   type Query {
-    ${apiQuery}
-    ${responseQuery}
+    ${apiQueries}
+    ${responseQueries}
   }
-
-  # Include schemas
-  ${apiTypes}
-  ${responseTypes}
 
   # Include mutations
   type Mutation {
@@ -24,4 +23,4 @@ const typeDefs = gql`
   }
 `;
 
-export {typeDefs};
+export default typeDefs;

@@ -1,5 +1,7 @@
 import pkg from 'mongodb';
-import dotenv from './environment.js';
+import readEnv from './readEnv';
+
+readEnv();
 
 const {MongoClient, ObjectId} = pkg;
 const clientDb = await MongoClient.connect(process.env.MONGO_URL, {useUnifiedTopology: true});

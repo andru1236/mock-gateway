@@ -1,6 +1,4 @@
 import fetch from 'node-fetch';
-import dotenv from './environment.js';
-
 class ServerData {
   
   constructor () {

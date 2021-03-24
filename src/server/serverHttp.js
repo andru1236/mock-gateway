@@ -1,7 +1,13 @@
-import { ApolloServer } from 'apollo-server-express';
-import { schemaDefs } from './schemaBuider.js';
+import express from "express";
+import { ApolloServer } from "apollo-server-express";
+import { schemaDefs } from "./schemaBuilder.js";
 
-// GraphQL server
 const server = new ApolloServer(schemaDefs);
+const app = express();
+server.applyMiddleware({ app });
 
-export {server};
+export const start = () => {
+  app.listen({ port: 4000 }, () =>
+    console.log("Now browse to http://localhost:4000" + server.graphqlPath)
+  );
+};

@@ -1,7 +1,5 @@
-// Response Mutations
-
-const responseMutations = `
+const responseMutation = `
   createResponse(name: String!, response: JSON!): String!
 `;
 
-export {responseMutations};
+export default responseMutation;

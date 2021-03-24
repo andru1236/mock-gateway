@@ -4,7 +4,7 @@ import { apiMutations } from './apis/mutations.js';
 import { responseMutations } from './responses/mutations.js';
 import { GraphQLJSON } from 'graphql-type-json';
 
-const resolvers = {
+export const resolvers = {
   JSON: GraphQLJSON,
 
   Query: {
@@ -17,5 +17,3 @@ const resolvers = {
     ...responseMutations
   }
 };
-
-export {resolvers};

@@ -1,6 +1,4 @@
-// Api Mutations
-
-const apiMutations = `
+const apiMutation = `
   createAPI(name: String!, port: Int!): String
   updateAPI(apiId: String!, name: String!, port: Int!): String
   removeAPI(apiId: String!): String
@@ -9,4 +7,4 @@ const apiMutations = `
   removeRoute(apiId: String!, path: String!, method: String!): String
 `;
 
-export {apiMutations};
+export default apiMutation
