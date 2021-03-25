@@ -1,29 +1,12 @@
-import {mongoDb, ObjectId} from '../../data/mongoData.js';
+import dal from './dal';
 
-const apiQueries = {
-  api: async (parent, args) => {
-    let apiData = mongoDb.getApis();
-
-    if (apiData) {
-      let apiId = args._id;
-      let api = await apiData.findOne(ObjectId(apiId));
-      return api;
-    }
-    else {
-      return { status: 404, message : "error" };
-    }
-  },
-  apis: async () => {
-    let apiData = mongoDb.getApis();
-
-    if (apiData) {
-      let apis = await apiData.find({}).toArray();
-      return apis;
-    }
-    else {
-      return { status: 404, message : "error" };
-    }
-  }
+const api = async (parent, args) => {
+  return await dao.searchAnApi(args.id);
 };
 
-export {apiQueries};
+const apis = async () => await dal.searchAllApis();
+
+export default {
+  api,
+  apis,
+};
