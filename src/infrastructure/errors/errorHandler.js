@@ -9,6 +9,9 @@ export const errorHandler = (error) => {
   if (error instanceof errors.NoFoundError) {
     return "Error: no found";
   }
+  if (error instanceof errors.ResponseError) {
+    return error.message;
+  }
   if (error instanceof Error) {
     throw error;
   }

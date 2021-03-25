@@ -1,62 +1,128 @@
-import { ServerData, executeApiBrige } from "../../infrastructure";
+import { executeApiBrige } from "../../infrastructure";
 import apiTranslator from "./apiTranslator";
 
-const serverData = new ServerData();
-
-const createAPI = async (_, args, {loaders}) => {
+// create new api
+const createAPI = async (_, args, context) => {
+  const { apiPath, method } = apiTranslator.createApi();
   const body = {
     name: args.name,
-    port: args.port,
+    port: args.port
   };
 
-  const { mockApiPath, method } = apiTranslator.createApi;
-
-
-  // Example callback
-  const callback = (response) => {
-    console.log(response);
-    return response;
-  };
-
-  const result = await executeApiBrige(mockApiPath, method, body, callback);
+  const res = await executeApiBrige(apiPath, method, body, (res) => res);
+  return res;
 };
-
-const updateAPI = async (parent, args, context, info) => {
-  let url = "apis/" + args.apiId;
-  let apiBody = {
+// update api
+const updateAPI = async (_, args, context) => {
+  const { apiPath, method } = apiTranslator.updateApi(args.apiId);
+  const body = {
     name: args.name,
-    port: args.port,
+    port: args.port
   };
-  // update api data
-  let res = await serverData.put(apiBody, url);
-  context.loaders.apis.prime(res.id, res)
-  return res.status == 200
-    ? null
-    : "Error " + res.status + " , Message : " + res.message;
+
+  const res = await executeApiBrige(apiPath, method, body);
+  //context.loaders.apis.prime(res.id, res)
+  return res;
 };
-const removeAPI = async (parent, args, context, info) => {
-  let url = "apis/" + args.apiId;
-  // remove api data
-  let res = await serverData.deleteApiData(url);
-  return res.status == 200
-    ? null
-    : "Error " + res.status + " , Message : " + res.message;
+// remove api
+const removeAPI = async (_, args, context) => {
+  const { apiPath, method } = apiTranslator.removeApi(args.apiId);
+  const res = await executeApiBrige(apiPath, method, {});
+  return res;
 };
-const createRoute = (parent, args, context, info) => {
-  return "Route created successfully!";
+// start api
+const startAPI = async (_, args, context) => {
+  const { apiPath, method } = apiTranslator.startApi(args.apiId);
+  const res = await executeApiBrige(apiPath, method, {});
+  return res;
 };
-const updateRoute = (parent, args, context, info) => {
-  return "Route updated successfully!";
+// stop api
+const stopAPI = async (_, args, context) => {
+  const { apiPath, method } = apiTranslator.stopApi(args.apiId);
+  const res = await executeApiBrige(apiPath, method, {});
+  return res;
 };
-const removeRoute = (parent, args, context, info) => {
-  return "Route removed successfully!";
+// create route
+const createRoute = async (_, args, context) => {
+  const { apiPath, method } = apiTranslator.createRoute(args.apiId);
+  let body = {
+    path: args.path,
+    method: args.method,
+    response: args.response
+  };
+
+  const res = await executeApiBrige(apiPath, method, body);
+  return res;
+};
+// update route
+const updateRoute = async (_, args, context) => {
+  const { apiPath, method } = apiTranslator.updateRoute(args.apiId);
+  const body = {
+    path: args.path,
+    method: args.method,
+    response: args.response
+  };
+
+  const res = await executeApiBrige(apiPath, method, body);
+  return res;
+};
+// remove route
+const removeRoute = async (_, args, context) => {
+  const { apiPath, method } = apiTranslator.removeRoute(args.apiId);
+  const body = {
+    path: args.path,
+    method: args.method
+  };
+
+  const res = await executeApiBrige(apiPath, method, body);
+  return res;
+};
+// create route params
+const createRouteParams = async (_, args, context) => {
+  const { apiPath, method } = apiTranslator.createRouteParams(args.apiId, args.routeId);
+  const body = {
+    method: args.method,
+    params: args.param,
+    response: args.response
+  };
+
+  const res = await executeApiBrige(apiPath, method, body);
+  return res;
+};
+// update route params
+const updateRouteParams = async (_, args, context) => {
+  const { apiPath, method } = apiTranslator.updateRouteParams(args.apiId, args.routeId);
+  const body = {
+    method: args.method,
+    params: args.param,
+    response: args.response
+  };
+
+  const res = await executeApiBrige(apiPath, method, body);
+  return res;
+};
+// remove route params
+const removeRouteParams = async (_, args, context) => {
+  const { apiPath, method } = apiTranslator.removeRouteParams(args.apiId, args.routeId);
+  const body = {
+    method: args.method,
+    params: args.param
+  };
+
+  const res = await executeApiBrige(apiPath, method, body);
+  return res;
 };
 
 export default {
   createAPI,
   updateAPI,
   removeAPI,
+  startAPI,
+  stopAPI,
   createRoute,
   updateRoute,
   removeRoute,
+  createRouteParams,
+  updateRouteParams,
+  removeRouteParams
 };

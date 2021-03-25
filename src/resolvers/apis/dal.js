@@ -7,15 +7,11 @@ const searchAllApis = async (limit = null) => {
   return await dbc.apis.find({}).toArray();
 };
 
-
 const searchAnApi = async (apiId) =>{
-    return await dbc.apis.findOne(ObjectId(apiId))
+  return await dbc.apis.findOne(ObjectId(apiId))
 };
 
-
 export default {
-    searchAllApis: withErrorHandler(searchAllApis),
-    searchAnApi: withErrorHandler(searchAnApi)
+  searchAllApis: withErrorHandler(searchAllApis),
+  searchAnApi: withErrorHandler(searchAnApi)
 }
-
-
