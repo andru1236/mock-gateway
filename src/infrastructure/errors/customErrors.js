@@ -6,6 +6,12 @@ class DatabaseError extends Error {
   }
 }
 
+class ResponseError extends Error {
+  constructor(message) {
+    super(message);
+  }
+}
+
 class NoFoundError extends Error {
   constructor(message) {
     super(message);
@@ -14,5 +20,6 @@ class NoFoundError extends Error {
 
 export const errors = {
   DatabaseError,
+  ResponseError,
   NoFoundError,
 };

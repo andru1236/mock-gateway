@@ -24,4 +24,8 @@ const Response = {
   createdOn: (obj) => obj[dbTranslator.createdOn],
 };
 
-export { Response, responseMutations, responseQueries };
+export { 
+  Response, 
+  responseQueries,
+  responseMutations
+};
