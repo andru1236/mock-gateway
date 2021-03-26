@@ -1,0 +1,31 @@
+version: "3.4"
+
+networks:
+  app-network:
+    driver: bridge
+
+services:
+
+  mock-gql-gateway:
+    env_file: ../.env
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: ${IMAGE_NAME}
+    container_name: ${CONTAINER_NAME}
+    ports:
+      - ${GQL_PORT}:${GQL_PORT}
+    volumes:
+      - ../:/workspace
+    depends_on:
+      - mongo-db
+    networks:
+      - app-network
+    command: ["npm", "start"]
+
+  mongo-db:
+    image: mongo
+    ports:
+      - 27017:27017
+    networks:
+      - app-network

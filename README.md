@@ -1,6 +1,22 @@
 # mock-gateway
 GQL, API REST
 
+
+## Requierements:
+* Nvm
+* Node 14
+* Yarn
+* Mongodb
+* Docker
+* Docker-compose
+---
+## Run with docker
+```bash
+Make build
+Make start
+```
+
+```gql
 GraphQL queries to test
 -----------------------
 query getApis {
@@ -37,7 +53,14 @@ query getResponses {
     name
     created_on
     tracking_assignation {
-      api_id
+      api{
+        id
+        name
+        port
+        routes{
+          ...
+        }
+      }
     }
   }
 }
@@ -48,7 +71,14 @@ query getResponse($id: String!) {
     response
     created_on
     tracking_assignation {
-      api_id
+      api{
+        id
+        name
+        port
+        routes{
+          ...
+        }
+      }
       routes {
         path
         method
@@ -57,3 +87,4 @@ query getResponse($id: String!) {
     }
   }
 }
+```
