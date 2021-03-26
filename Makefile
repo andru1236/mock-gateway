@@ -16,8 +16,8 @@ clean:
 	docker rmi ${IMAGE_NAME}
 
 shell:
-	docker-compose exec $(CONTAINER_NAME) bash
-	# docker run --rm -it -v ${PWD}:/workspace ${IMAGE_NAME} bash
+	docker exec -it $(CONTAINER_NAME) bash
+	#docker run --rm -it -v ${PWD}:/workspace ${IMAGE_NAME} bash
 
 docker-start:
 	GQL_PORT=${GQL_PORT} \
