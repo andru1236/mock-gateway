@@ -1,4 +1,4 @@
-import pkg from 'mongodb';
+import pkg from "mongodb";
 import readEnv from "./readEnv";
 
 readEnv();
@@ -12,7 +12,7 @@ const db = connection.db(process.env.MONGO_DB);
 
 const dbc = {
   apis: db.collection("apis"),
-  responses: db.collection("responses")
-}
+  responses: db.collection("responses"),
+};
 
 export { dbc, ObjectId };

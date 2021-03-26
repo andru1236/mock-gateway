@@ -1,6 +1,6 @@
-import apiMutations  from "./mutations";
-import apiQueries from './queries';
-import dbTranslator from './dbTranslator';
+import apiMutations from "./mutations";
+import apiQueries from "./queries";
+import dbTranslator from "./dbTranslator";
 
 const Api = {
   id: (obj) => obj[dbTranslator.id],
@@ -10,13 +10,9 @@ const Api = {
   settings: (obj) => {
     return {
       enabled: obj.settings.enabled,
-      createdOn: obj.settings[dbTranslator.settings.createdOn]
-    }
+      createdOn: obj.settings[dbTranslator.settings.createdOn],
+    };
   },
 };
 
-export {
-  Api,
-  apiQueries,
-  apiMutations
-};
+export { Api, apiQueries, apiMutations };

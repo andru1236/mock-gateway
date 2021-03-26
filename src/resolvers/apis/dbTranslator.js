@@ -1,7 +1,7 @@
 export default {
-    id: "_id",
-    settings: {
-        enabled: "enabled",
-        createdOn: "created_on"
-    }
-}
+  id: "_id",
+  settings: {
+    enabled: "enabled",
+    createdOn: "created_on",
+  },
+};

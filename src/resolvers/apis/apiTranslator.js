@@ -65,4 +65,4 @@ export default {
       method: "DELETE",
     };
   },
-}
+};

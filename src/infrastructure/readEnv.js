@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 
 const readEnviromentVariables = () => {
-    dotenv.config();
+  dotenv.config();
 };
 
 export default readEnviromentVariables;

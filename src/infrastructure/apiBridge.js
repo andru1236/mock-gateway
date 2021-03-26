@@ -12,34 +12,32 @@ const responseHandler = async (rawResponse, method) => {
   logger.debug(`responseHandler, transform raw response -> cleaned response`);
   const response = await rawResponse.json();
   logger.debug(response);
-  
+
   // Response messages
   if ([200, 201].includes(response?.meta?.statusCode)) {
     const status = response.meta.statusCode;
     switch (method) {
-      case 'POST':
+      case "POST":
         return "Post data successfully.";
-      case 'PUT':
+      case "PUT":
         return "Put data successfully.";
-      case 'DELETE':
+      case "DELETE":
         return "Delete data successfully.";
       default:
         return "Execute successfully.";
     }
-  }
-  else {
+  } else {
     let message = "Something went wrong.";
     switch (method) {
-      case 'POST':
+      case "POST":
         message = "Something went wrong when trying to Post data.";
-      case 'PUT':
+      case "PUT":
         message = "Something went wrong when trying to Put data.";
-      case 'DELETE':
+      case "DELETE":
         message = "Something went wrong when trying to Delete data.";
       default:
+        throw new ResponseError("Error with API Rest");
     }
-
-    return errorHandler(new ResponseError(message));
   }
 };
 
@@ -60,12 +58,14 @@ export const executeApiBrige = async (
   try {
     const apiUrlPath = `${REST_API_URL}${urlPath}`;
     const rawResponse = await fetch(apiUrlPath, httpSetting);
-    const cleanedResponse = await responseHandler(rawResponse, httpSetting.method);
+    const cleanedResponse = await responseHandler(
+      rawResponse,
+      httpSetting.method
+    );
     if (callback !== null) {
       return callback(cleanedResponse);
     }
     return cleanedResponse;
-    
   } catch (error) {
     return errorHandler(error);
   }
