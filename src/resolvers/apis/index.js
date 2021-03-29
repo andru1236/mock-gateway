@@ -1,6 +1,7 @@
 import apiMutations  from "./mutations";
 import apiQueries from './queries';
 import dbTranslator from './dbTranslator';
+import { apisLoader } from './dataLoader';
 
 const Api = {
   id: (obj) => obj[dbTranslator.id],
@@ -18,5 +19,6 @@ const Api = {
 export {
   Api,
   apiQueries,
-  apiMutations
+  apiMutations,
+  apisLoader
 };
