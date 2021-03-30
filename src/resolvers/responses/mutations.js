@@ -1,6 +1,6 @@
 import { executeApiBrige } from "../../infrastructure";
 import apiTranslator from "./apiTranslator";
-
+import dal from "./dal";
 
 const createResponse = async (_, args, context) => {
   const { apiPath, method } = apiTranslator.createResponse();
@@ -23,13 +23,16 @@ const updateResponse = async (_, args, context) => {
     response: args.response,
   };
 
-  return await executeApiBrige(apiPath, method, body, res => {
+  const callback = async (res) => {
     if (res.status == 200) {
-      responsesLoader.prime(args.responseId, body);
+      const responseObj = await dal.searchAResponse(args.responseId);
+      await responsesLoader.prime(args.responseId, responseObj);
     }
   
     return res.message;
-  });
+  };
+
+  return await executeApiBrige(apiPath, method, body, callback);
 };
 
 // remove response
@@ -48,6 +51,7 @@ const removeResponse = async (_, args, context) => {
 
 // assign response to api
 const assignResponseToApi = async (_, args, context) => {
+  const responsesLoader = context.loaders.responsesLoader;
   const { apiPath, method } = apiTranslator.assignResponseToApi(
     args.responseId
   );
@@ -57,9 +61,16 @@ const assignResponseToApi = async (_, args, context) => {
     method: args.method,
   };
 
-  return await executeApiBrige(apiPath, method, body, res => {
+  const callback = async (res) => {
+    if (res.status == 200) {
+      const responseObj = await dal.searchAResponse(args.responseId);
+      await responsesLoader.prime(args.responseId, responseObj);
+    }
+  
     return res.message;
-  });
+  };
+
+  return await executeApiBrige(apiPath, method, body, callback);
 };
 
 export default {
