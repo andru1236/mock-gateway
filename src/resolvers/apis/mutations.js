@@ -1,5 +1,6 @@
 import { executeApiBrige } from "../../infrastructure";
 import apiTranslator from "./apiTranslator";
+import dal from "./dal";
 
 const createAPI = async (_, args, context) => {
   const { apiPath, method } = apiTranslator.createApi();
@@ -22,26 +23,31 @@ const updateAPI = async (_, args, context) => {
     port: args.port,
   };
 
-  return await executeApiBrige(apiPath, method, body, res => {
+  const callback = async (res) => {
     if (res.status == 200) {
-      apisLoader.prime(args.apiId.toString(), body);
+      const apiObj = await dal.searchAnApi(args.apiId);
+      await apisLoader.prime(args.apiId, apiObj);
     }
   
     return res.message;
-  });
+  };
+
+  return await executeApiBrige(apiPath, method, body, callback);
 };
 
 // remove api
 const removeAPI = async (_, args, context) => {
   const apisLoader = context.loaders.apisLoader;
   const { apiPath, method } = apiTranslator.removeApi(args.apiId);
-  return await executeApiBrige(apiPath, method, {}, res => {
+  const callback = async (res) => {
     if (res.status == 200) {
-      apisLoader.clear(args.apiId.toString());
+      await apisLoader.clear(args.apiId);
     }
 
     return res.message;
-  });
+  };
+
+  return await executeApiBrige(apiPath, method, {}, callback);
 };
 
 // start api
@@ -69,9 +75,16 @@ const createRoute = async (_, args, context) => {
     response: args.response,
   };
 
-  return await executeApiBrige(apiPath, method, body, res => {
+  const callback = async (res) => {
+    if (res.status == 200) {
+      const apiObj = await dal.searchAnApi(args.apiId);
+      await apisLoader.prime(args.apiId, apiObj);
+    }
+  
     return res.message;
-  });
+  };
+
+  return await executeApiBrige(apiPath, method, body, callback);
 };
 
 // update route
@@ -83,9 +96,16 @@ const updateRoute = async (_, args, context) => {
     response: args.response,
   };
 
-  return await executeApiBrige(apiPath, method, body, res => {
+  const callback = async (res) => {
+    if (res.status == 200) {
+      const apiObj = await dal.searchAnApi(args.apiId);
+      await apisLoader.prime(args.apiId, apiObj);
+    }
+  
     return res.message;
-  });
+  };
+
+  return await executeApiBrige(apiPath, method, body, callback);
 };
 
 // remove route
@@ -96,9 +116,16 @@ const removeRoute = async (_, args, context) => {
     method: args.method,
   };
 
-  return await executeApiBrige(apiPath, method, body, res => {
+  const callback = async (res) => {
+    if (res.status == 200) {
+      const apiObj = await dal.searchAnApi(args.apiId);
+      await apisLoader.prime(args.apiId, apiObj);
+    }
+  
     return res.message;
-  });
+  };
+
+  return await executeApiBrige(apiPath, method, body, callback);
 };
 
 // create route params
@@ -113,9 +140,16 @@ const createRouteParams = async (_, args, context) => {
     response: args.response,
   };
 
-  return await executeApiBrige(apiPath, method, body, res => {
+  const callback = async (res) => {
+    if (res.status == 200) {
+      const apiObj = await dal.searchAnApi(args.apiId);
+      await apisLoader.prime(args.apiId, apiObj);
+    }
+  
     return res.message;
-  });
+  };
+
+  return await executeApiBrige(apiPath, method, body, callback);
 };
 
 // update route params
@@ -130,9 +164,16 @@ const updateRouteParams = async (_, args, context) => {
     response: args.response,
   };
 
-  return await executeApiBrige(apiPath, method, body, res => {
+  const callback = async (res) => {
+    if (res.status == 200) {
+      const apiObj = await dal.searchAnApi(args.apiId);
+      await apisLoader.prime(args.apiId, apiObj);
+    }
+  
     return res.message;
-  });
+  };
+
+  return await executeApiBrige(apiPath, method, body, callback);
 };
 
 // remove route params
@@ -146,9 +187,16 @@ const removeRouteParams = async (_, args, context) => {
     params: args.param,
   };
 
-  return await executeApiBrige(apiPath, method, body, res => {
+  const callback = async (res) => {
+    if (res.status == 200) {
+      const apiObj = await dal.searchAnApi(args.apiId);
+      await apisLoader.prime(args.apiId, apiObj);
+    }
+  
     return res.message;
-  });
+  };
+
+  return await executeApiBrige(apiPath, method, body, callback);
 };
 
 export default {
