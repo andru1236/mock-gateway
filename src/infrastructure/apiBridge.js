@@ -1,7 +1,6 @@
 import fetch from "node-fetch";
 import readEnv from "./readEnv";
-import { errorHandler } from "./errors";
-import { errors } from "./errors/customErrors";
+import { errorHandler, errors, errorInfo } from "./errors";
 import { logger } from "./logger";
 
 readEnv();
@@ -11,33 +10,24 @@ const { ResponseError } = errors;
 const responseHandler = async (rawResponse, method) => {
   logger.debug(`responseHandler, transform raw response -> cleaned response`);
   const response = await rawResponse.json();
-  logger.debug(response);
-
+  
   // Response messages
   if ([200, 201].includes(response?.meta?.statusCode)) {
-    const status = response.meta.statusCode;
-    switch (method) {
-      case "POST":
-        return "Post data successfully.";
-      case "PUT":
-        return "Put data successfully.";
-      case "DELETE":
-        return "Delete data successfully.";
-      default:
-        return "Execute successfully.";
-    }
-  } else {
-    let message = "Something went wrong.";
-    switch (method) {
-      case "POST":
-        message = "Something went wrong when trying to Post data.";
-      case "PUT":
-        message = "Something went wrong when trying to Put data.";
-      case "DELETE":
-        message = "Something went wrong when trying to Delete data.";
-      default:
-        throw new ResponseError("Error with API Rest");
-    }
+    const status = response.meta.statusCode.toString();
+    const res = errorInfo['success'][method] ? 
+      errorInfo['success'][method] : 
+      errorInfo['defaultSuccess'][status];
+
+    logger.debug(res);
+    return res;
+  }
+  else {
+    const res = errorInfo['responseError'][method] ? 
+      errorInfo['responseError'][method] : 
+      errorInfo['defaultError']['400'];
+
+    logger.error(res.message);
+    return errorHandler(new ResponseError(res.message));
   }
 };
 

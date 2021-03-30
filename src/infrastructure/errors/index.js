@@ -1,2 +1,10 @@
-export { errorHandler, withErrorHandler } from "./errorHandler";
-export { errors } from "./customErrors";
+import { errorHandler, withErrorHandler } from "./errorHandler";
+import { errors } from "./customErrors";
+import { errorInfo } from './errorInfo';
+
+export {
+  errorHandler,
+  withErrorHandler,
+  errors,
+  errorInfo
+};

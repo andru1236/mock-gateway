@@ -2,6 +2,7 @@ import responseMutations from "./mutations";
 import responseQueries from "./queries";
 import dbTranslator from "./dbTranslator";
 import dal from "../apis/dal";
+import { responsesLoader } from './dataLoader';
 
 const Response = {
   id: (obj) => obj[dbTranslator.response.id],
@@ -27,5 +28,6 @@ const Response = {
 export { 
   Response, 
   responseQueries,
-  responseMutations
+  responseMutations,
+  responsesLoader
 };
