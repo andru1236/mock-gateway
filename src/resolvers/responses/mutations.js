@@ -32,7 +32,10 @@ const updateResponse = async (_, args, context) => {
   });
 };
 
+// remove response
+const removeResponse = async (_, args, context) => {
   const responsesLoader = context.loaders.responsesLoader;
+  const { apiPath, method } = apiTranslator.removeResponse(args.responseId);
 
   return await executeApiBrige(apiPath, method, {}, res => {
     if (res.status == 200) {
