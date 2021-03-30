@@ -1,14 +1,13 @@
-import DataLoader from 'dataloader';
-import { dbc, ObjectId } from "../../infrastructure";
+import DataLoader from "dataloader";
+import { logger } from "../../infrastructure";
+import dal from "./dal";
 
-const getApisByApiIds = async (apiIds) => {
-  const objIds = apiIds.map(function(id) {
-    return ObjectId(id);
-  });
-
-  return await dbc.apis.find({ _id:{ $in: objIds }}).toArray();
+const buildApisLoader = () => {
+  logger.info("Creating loader for apis");
+  return new DataLoader(async (apisId) => await dal.searchAnApi(apisId));
 };
 
-export const apisLoader = () => {
-  return new DataLoader(ids => getApisByApiIds(ids));
-};
+export default {
+  apis: buildApisLoader()
+}
+

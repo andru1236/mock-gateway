@@ -5,13 +5,11 @@ import { logger } from "./logger";
 
 readEnv();
 const REST_API_URL = process.env.BASE_BACKEND_URL;
-const { ResponseError } = errors;
 
 const responseHandler = async (rawResponse, method) => {
   logger.debug(`responseHandler, transform raw response -> cleaned response`);
   const response = await rawResponse.json();
   
-  // Response messages
   if ([200, 201].includes(response?.meta?.statusCode)) {
     const status = response.meta.statusCode.toString();
     const res = errorInfo['success'][method] ? 
@@ -27,7 +25,7 @@ const responseHandler = async (rawResponse, method) => {
       errorInfo['defaultError']['400'];
 
     logger.error(res.message);
-    return errorHandler(new ResponseError(res.message));
+    return errorHandler(new errors.ResponseError(res.message));
   }
 };
 

@@ -1,22 +1,22 @@
-import { executeApiBrige } from "../../infrastructure";
+import { executeApiBrige, logger } from "../../infrastructure";
 import apiTranslator from "./apiTranslator";
 import dal from "./dal";
 
-const createAPI = async (_, args, context) => {
+const createAPI = async (_, args) => {
+  logger.info(`Execute MUTATION: createAPI | params: ${JSON.stringify(args)}`);
   const { apiPath, method } = apiTranslator.createApi();
   const body = {
     name: args.name,
     port: args.port,
   };
 
-  return await executeApiBrige(apiPath, method, body, res => {
+  return await executeApiBrige(apiPath, method, body, (res) => {
     return res.message;
   });
 };
 
-// update api
-const updateAPI = async (_, args, context) => {
-  const apisLoader = context.loaders.apisLoader;
+const updateAPI = async (_, args, { loaders }) => {
+  logger.info(`Execute MUTATION: updateAPI | params: ${JSON.stringify(args)}`);
   const { apiPath, method } = apiTranslator.updateApi(args.apiId);
   const body = {
     name: args.name,
@@ -26,22 +26,21 @@ const updateAPI = async (_, args, context) => {
   const callback = async (res) => {
     if (res.status == 200) {
       const apiObj = await dal.searchAnApi(args.apiId);
-      await apisLoader.prime(args.apiId, apiObj);
+      await loaders.apis.prime(args.apiId, apiObj);
     }
-  
+
     return res.message;
   };
 
   return await executeApiBrige(apiPath, method, body, callback);
 };
 
-// remove api
-const removeAPI = async (_, args, context) => {
-  const apisLoader = context.loaders.apisLoader;
+const removeAPI = async (_, args, { loaders }) => {
+  logger.info(`Execute MUTATION: removeAPI | params: ${JSON.stringify(args)}`);
   const { apiPath, method } = apiTranslator.removeApi(args.apiId);
   const callback = async (res) => {
     if (res.status == 200) {
-      await apisLoader.clear(args.apiId);
+      await loaders.apis.clear(args.apiId);
     }
 
     return res.message;
@@ -51,23 +50,25 @@ const removeAPI = async (_, args, context) => {
 };
 
 // start api
-const startAPI = async (_, args, context) => {
+const startAPI = async (_, args) => {
+  logger.info(`Execute MUTATION: startAPI | params: ${JSON.stringify(args)}`);
   const { apiPath, method } = apiTranslator.startApi(args.apiId);
-  return await executeApiBrige(apiPath, method, {}, res => {
+  return await executeApiBrige(apiPath, method, {}, (res) => {
     return res.message;
   });
 };
 
 // stop api
-const stopAPI = async (_, args, context) => {
+const stopAPI = async (_, args) => {
+  logger.info(`Execute MUTATION: stopAPI | params: ${JSON.stringify(args)}`);
   const { apiPath, method } = apiTranslator.stopApi(args.apiId);
-  return await executeApiBrige(apiPath, method, {}, res => {
+  return await executeApiBrige(apiPath, method, {}, (res) => {
     return res.message;
   });
 };
 
-// create route
-const createRoute = async (_, args, context) => {
+const createRoute = async (_, args, { loaders }) => {
+  logger.info(`Execute MUTATION: createRoute | params: ${JSON.stringify(args)}`);
   const { apiPath, method } = apiTranslator.createRoute(args.apiId);
   let body = {
     path: args.path,
@@ -78,17 +79,17 @@ const createRoute = async (_, args, context) => {
   const callback = async (res) => {
     if (res.status == 200) {
       const apiObj = await dal.searchAnApi(args.apiId);
-      await apisLoader.prime(args.apiId, apiObj);
+      await loaders.apis.prime(args.apiId, apiObj);
     }
-  
+
     return res.message;
   };
 
   return await executeApiBrige(apiPath, method, body, callback);
 };
 
-// update route
-const updateRoute = async (_, args, context) => {
+const updateRoute = async (_, args, { loaders }) => {
+  logger.info(`Execute MUTATION: updateRoute | params: ${JSON.stringify(args)}`);
   const { apiPath, method } = apiTranslator.updateRoute(args.apiId);
   const body = {
     path: args.path,
@@ -99,17 +100,17 @@ const updateRoute = async (_, args, context) => {
   const callback = async (res) => {
     if (res.status == 200) {
       const apiObj = await dal.searchAnApi(args.apiId);
-      await apisLoader.prime(args.apiId, apiObj);
+      await loaders.apis.prime(args.apiId, apiObj);
     }
-  
+
     return res.message;
   };
 
   return await executeApiBrige(apiPath, method, body, callback);
 };
 
-// remove route
-const removeRoute = async (_, args, context) => {
+const removeRoute = async (_, args, { loaders }) => {
+  logger.info(`Execute MUTATION: removeRoute | params: ${JSON.stringify(args)}`);
   const { apiPath, method } = apiTranslator.removeRoute(args.apiId);
   const body = {
     path: args.path,
@@ -119,17 +120,19 @@ const removeRoute = async (_, args, context) => {
   const callback = async (res) => {
     if (res.status == 200) {
       const apiObj = await dal.searchAnApi(args.apiId);
-      await apisLoader.prime(args.apiId, apiObj);
+      await loaders.apis.prime(args.apiId, apiObj);
     }
-  
+
     return res.message;
   };
 
   return await executeApiBrige(apiPath, method, body, callback);
 };
 
-// create route params
-const createRouteParams = async (_, args, context) => {
+const createRouteParams = async (_, args, { loaders }) => {
+  logger.info(
+    `Execute MUTATION: CreateRouteParams | params: ${JSON.stringify(args)}`
+  );
   const { apiPath, method } = apiTranslator.createRouteParams(
     args.apiId,
     args.routeId
@@ -143,17 +146,19 @@ const createRouteParams = async (_, args, context) => {
   const callback = async (res) => {
     if (res.status == 200) {
       const apiObj = await dal.searchAnApi(args.apiId);
-      await apisLoader.prime(args.apiId, apiObj);
+      await loaders.apis.prime(args.apiId, apiObj);
     }
-  
+
     return res.message;
   };
 
   return await executeApiBrige(apiPath, method, body, callback);
 };
 
-// update route params
-const updateRouteParams = async (_, args, context) => {
+const updateRouteParams = async (_, args, { loaders }) => {
+  logger.info(
+    `Execute MUTATION: updateRouteParams | params: ${JSON.stringify(args)}`
+  );
   const { apiPath, method } = apiTranslator.updateRouteParams(
     args.apiId,
     args.routeId
@@ -167,17 +172,19 @@ const updateRouteParams = async (_, args, context) => {
   const callback = async (res) => {
     if (res.status == 200) {
       const apiObj = await dal.searchAnApi(args.apiId);
-      await apisLoader.prime(args.apiId, apiObj);
+      await loaders.apis.prime(args.apiId, apiObj);
     }
-  
+
     return res.message;
   };
 
   return await executeApiBrige(apiPath, method, body, callback);
 };
 
-// remove route params
-const removeRouteParams = async (_, args, context) => {
+const removeRouteParams = async (_, args, { loaders }) => {
+  logger.info(
+    `Execute MUTATION: removeRouteParams | params: ${JSON.stringify(args)}`
+  );
   const { apiPath, method } = apiTranslator.removeRouteParams(
     args.apiId,
     args.routeId
@@ -190,9 +197,9 @@ const removeRouteParams = async (_, args, context) => {
   const callback = async (res) => {
     if (res.status == 200) {
       const apiObj = await dal.searchAnApi(args.apiId);
-      await apisLoader.prime(args.apiId, apiObj);
+      await loaders.apis.prime(args.apiId, apiObj);
     }
-  
+
     return res.message;
   };
 

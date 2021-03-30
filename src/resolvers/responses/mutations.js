@@ -1,22 +1,28 @@
-import { executeApiBrige } from "../../infrastructure";
+import { executeApiBrige, logger } from "../../infrastructure";
 import apiTranslator from "./apiTranslator";
 import dal from "./dal";
 
-const createResponse = async (_, args, context) => {
+const createResponse = async (_, args) => {
+  logger.info(
+    `Execute MUTATION: createResponse | params: ${JSON.stringify(args)}`
+  );
+
   const { apiPath, method } = apiTranslator.createResponse();
   const body = {
     name: args.name,
     response: args.response,
   };
 
-  return await executeApiBrige(apiPath, method, body, res => {
+  return await executeApiBrige(apiPath, method, body, (res) => {
     return res.message;
   });
 };
 
-//update response
-const updateResponse = async (_, args, context) => {
-  const responsesLoader = context.loaders.responsesLoader;
+const updateResponse = async (_, args, { loaders }) => {
+  logger.info(
+    `Execute MUTATION: updateResponse | params: ${JSON.stringify(args)}`
+  );
+
   const { apiPath, method } = apiTranslator.updateResponse(args.responseId);
   const body = {
     name: args.name,
@@ -26,32 +32,35 @@ const updateResponse = async (_, args, context) => {
   const callback = async (res) => {
     if (res.status == 200) {
       const responseObj = await dal.searchAResponse(args.responseId);
-      await responsesLoader.prime(args.responseId, responseObj);
+      await loaders.responses.prime(args.responseId, responseObj);
     }
-  
     return res.message;
   };
 
   return await executeApiBrige(apiPath, method, body, callback);
 };
 
-// remove response
-const removeResponse = async (_, args, context) => {
-  const responsesLoader = context.loaders.responsesLoader;
+const removeResponse = async (_, args, { loaders }) => {
+  logger.info(
+    `Execute MUTATION: removeResponse | params: ${JSON.stringify(args)}`
+  );
+
   const { apiPath, method } = apiTranslator.removeResponse(args.responseId);
 
-  return await executeApiBrige(apiPath, method, {}, res => {
+  return await executeApiBrige(apiPath, method, {}, (res) => {
     if (res.status == 200) {
-      responsesLoader.clear(args.responseId);
+      loaders.responses.clear(args.responseId);
     }
-  
+
     return res.message;
   });
 };
 
-// assign response to api
-const assignResponseToApi = async (_, args, context) => {
-  const responsesLoader = context.loaders.responsesLoader;
+const assignResponseToApi = async (_, args, { loaders }) => {
+  logger.info(
+    `Execute MUTATION: assignResponseToApi | params: ${JSON.stringify(args)}`
+  );
+
   const { apiPath, method } = apiTranslator.assignResponseToApi(
     args.responseId
   );
@@ -64,9 +73,9 @@ const assignResponseToApi = async (_, args, context) => {
   const callback = async (res) => {
     if (res.status == 200) {
       const responseObj = await dal.searchAResponse(args.responseId);
-      await responsesLoader.prime(args.responseId, responseObj);
+      await loaders.responses.prime(args.responseId, responseObj);
     }
-  
+
     return res.message;
   };
 

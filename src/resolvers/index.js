@@ -1,11 +1,15 @@
 import { GraphQLJSON } from "graphql-type-json";
-import { Api, apiQueries, apiMutations } from "./apis";
-import { Response, responseQueries, responseMutations } from "./responses";
+import { Api, apiQueries, apiMutations, apisLoader } from "./apis";
+import {
+  Response,
+  responseQueries,
+  responseMutations,
+  responseLoaders,
+} from "./responses";
 
-export default {
+export const resolvers = {
   JSON: GraphQLJSON,
-  
-  // add the models to resolve
+
   Api,
   Response,
 
@@ -18,4 +22,9 @@ export default {
     ...apiMutations,
     ...responseMutations,
   },
+};
+
+export const loaders = {
+  ...responseLoaders,
+  ...apisLoader
 };

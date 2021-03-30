@@ -1,17 +1,12 @@
 import typeDefs from "../types";
-import resolvers from "../resolvers";
-import { apisLoader } from "../resolvers/apis";
-import { responsesLoader } from "../resolvers/responses";
+import { resolvers, loaders } from "../resolvers";
 
 const apolloSchema = {
   typeDefs,
   resolvers,
   context: () => ({
-    loaders: {
-      apisLoader: apisLoader(),
-      responsesLoader: responsesLoader()
-    }
-  })
+    loaders,
+  }),
 };
 
 export { apolloSchema };
