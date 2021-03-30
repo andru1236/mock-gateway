@@ -12,6 +12,9 @@ server.applyMiddleware({ app });
 
 export const start = () => {
   app.listen({ port: process.env.GQL_PORT }, () =>
-    logger.debug("Now browse to http://localhost:4000" + server.graphqlPath)
+    logger.debug(
+      `GQL running over to http://localhost:${process.env.GQL_PORT}` +
+        server.graphqlPath
+    )
   );
 };
