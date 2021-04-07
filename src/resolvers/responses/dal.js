@@ -1,9 +1,9 @@
 import { dbc, ObjectId, withErrorHandler, logger } from "../../infrastructure";
 
-const searchAllResponses = async (limit = null) => {
+const searchAllResponses = async (limit = null, next = 0) => {
   logger.debug(`Calling to db -> get all RESPONSES`);
   return limit
-    ? await dbc.responses.find({}).limit(limit).toArray()
+    ? await dbc.responses.find({}).skip(next).limit(limit).toArray()
     : await dbc.responses.find({}).toArray();
 };
 

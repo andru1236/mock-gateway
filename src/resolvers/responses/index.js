@@ -33,7 +33,7 @@ const Response = {
       };
     });
   },
-  createdOn: (obj) => obj[dbTranslator.createdOn],
+  createdOn: (obj) => obj[dbTranslator.response.createdOn],
 };
 
 export { Response, responseQueries, responseMutations, responseLoaders };
