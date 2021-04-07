@@ -8,9 +8,9 @@ const api = async (_, args, { loaders }) => {
   return api;
 };
 
-const apis = async () => {
+const apis = async (_, { limit, next }) => {
   logger.info(`Executing QUERY: apis | NO params`);
-  return await dal.searchAllApis();
+  return await dal.searchAllApis(limit, next);
 };
 
 export default {
