@@ -40,7 +40,14 @@ const searchOneDevice = async (deviceId) => {
     deviceId = [deviceId];
   }
   const listObjIds = deviceId.map((id) => ObjectId(id));
-  return await dbc.devices.find({ _id: { $in: listObjIds } }).toArray();
+  const devices = await dbc.devices
+    .find({ _id: { $in: listObjIds } })
+    .toArray();
+
+  if (devices.length === 0) {
+    throw Error(`The ${deviceId} does not exists`);
+  }
+  return devices;
 };
 
 const searchAllDevices = async (limit = null) => {
