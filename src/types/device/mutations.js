@@ -1,7 +1,6 @@
-
 const deviceMutation = `
-    createDevice(name: String, port: Int, agentDB: String): Device
-    updateDevice(deviceId: String!, name: String, port: Int, agentDB: String): Device
+    createDevice(name: String, port: Int, agentDb: String): Boolean
+    updateDevice(deviceId: String!, name: String, port: Int, agentDb: String): Boolean
     removeDevice(deviceId: String): Boolean
     startSimulation(deviceId: String): Boolean
     stopSimulation(deviceId: String): Boolean

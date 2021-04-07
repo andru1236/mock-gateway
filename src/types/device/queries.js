@@ -1,5 +1,5 @@
 const deviceQuery = `
-    device(id: String!): Device
+    device(deviceId: String!): Device
     devices: [Device]
 `;
 

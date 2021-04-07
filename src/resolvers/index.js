@@ -1,5 +1,6 @@
 import { GraphQLJSON } from "graphql-type-json";
 import { Api, apiQueries, apiMutations, apisLoader } from "./apis";
+import { deviceMutations, deviceQueries } from "./device";
 import {
   Response,
   responseQueries,
@@ -16,15 +17,17 @@ export const resolvers = {
   Query: {
     ...apiQueries,
     ...responseQueries,
+    ...deviceQueries,
   },
 
   Mutation: {
     ...apiMutations,
     ...responseMutations,
+    ...deviceMutations,
   },
 };
 
 export const loaders = {
   ...responseLoaders,
-  ...apisLoader
+  ...apisLoader,
 };
