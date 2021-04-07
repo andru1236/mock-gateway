@@ -7,7 +7,15 @@ const Api = {
   id: (obj) => obj[dbTranslator.id],
   name: (obj) => obj.name,
   port: (obj) => obj.port,
-  routes: (obj) => obj.routes,
+  routes: (obj) => {
+    return obj.routes.map(route => {
+      return {
+        id: route[dbTranslator.routes.id],
+        path: route.path,
+        resources: route.resources
+      }
+    });
+  },
   settings: (obj) => {
     return {
       enabled: obj.settings.enabled,
