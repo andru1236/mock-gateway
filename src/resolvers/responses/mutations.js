@@ -1,4 +1,4 @@
-import { executeApiBrige, logger } from "../../infrastructure";
+import { executeApiBrige, logger, writeJsonFile } from "../../infrastructure";
 import apiTranslator from "./apiTranslator";
 import dal from "./dal";
 
@@ -82,9 +82,18 @@ const assignResponseToApi = async (_, args, { loaders }) => {
   return await executeApiBrige(apiPath, method, body, callback);
 };
 
+const exportResponseJSON = async (_, { fileName, response }) => {
+  logger.info(
+    `Execute MUTATION: exportResponseJSON | JSON file name: ${fileName} | jsonContent: ${JSON.stringify(response)}`
+  );
+
+  return await writeJsonFile(fileName, response);
+};
+
 export default {
   createResponse,
   updateResponse,
   removeResponse,
   assignResponseToApi,
+  exportResponseJSON
 };
