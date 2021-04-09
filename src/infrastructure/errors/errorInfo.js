@@ -23,5 +23,9 @@ export const errorInfo = {
   },
   defaultError: {
     "400": { status: 400, message: "Something went wrong, try again." },
+  },
+  jsonError: {
+    "fileName": { status: 400, message: "Error: File name is empty or null." },
+    "emptyJson": { status: 400, message: "Error: Json content is empty or null." },
   }
 };
