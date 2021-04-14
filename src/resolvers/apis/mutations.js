@@ -50,21 +50,33 @@ const removeAPI = async (_, args, { loaders }) => {
 };
 
 // start api
-const startAPI = async (_, args) => {
+const startAPI = async (_, args, { loaders }) => {
   logger.info(`Execute MUTATION: startAPI | params: ${JSON.stringify(args)}`);
   const { apiPath, method } = apiTranslator.startApi(args.apiId);
-  return await executeApiBrige(apiPath, method, {}, (res) => {
+  const callback = async (res) => {
+    if (res.status == 200) {
+      const apiObj = await dal.searchAnApi(args.apiId);
+      await loaders.apis.prime(args.apiId, apiObj);
+    }
+
     return res.message;
-  });
+  };
+  return await executeApiBrige(apiPath, method, {}, callback);
 };
 
 // stop api
-const stopAPI = async (_, args) => {
+const stopAPI = async (_, args, { loaders }) => {
   logger.info(`Execute MUTATION: stopAPI | params: ${JSON.stringify(args)}`);
   const { apiPath, method } = apiTranslator.stopApi(args.apiId);
-  return await executeApiBrige(apiPath, method, {}, (res) => {
+  const callback = async (res) => {
+    if (res.status == 200) {
+      const apiObj = await dal.searchAnApi(args.apiId);
+      await loaders.apis.prime(args.apiId, apiObj);
+    }
+
     return res.message;
-  });
+  };
+  return await executeApiBrige(apiPath, method, {}, callback);
 };
 
 const createRoute = async (_, args, { loaders }) => {
