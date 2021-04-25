@@ -50,9 +50,11 @@ export const executeApiBrige = async (
       rawResponse,
       httpSetting.method
     );
+
     if (callback !== null) {
-      return callback(cleanedResponse);
+      return await callback(cleanedResponse);
     }
+
     return cleanedResponse;
   } catch (error) {
     return errorHandler(error);

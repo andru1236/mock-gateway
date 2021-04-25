@@ -1,6 +1,6 @@
 import { executeApiBrige, logger, writeJsonFile } from "../../infrastructure";
 import apiTranslator from "./apiTranslator";
-import dal from "./dal";
+
 
 const createResponse = async (_, args) => {
   logger.info(
@@ -18,6 +18,7 @@ const createResponse = async (_, args) => {
   });
 };
 
+
 const updateResponse = async (_, args, { loaders }) => {
   logger.info(
     `Execute MUTATION: updateResponse | params: ${JSON.stringify(args)}`
@@ -29,32 +30,23 @@ const updateResponse = async (_, args, { loaders }) => {
     response: args.response,
   };
 
-  const callback = async (res) => {
-    if (res.status == 200) {
-      const responseObj = await dal.searchAResponse(args.responseId);
-      await loaders.responses.prime(args.responseId, responseObj);
-    }
-    return res.message;
-  };
-
-  return await executeApiBrige(apiPath, method, body, callback);
+  const response = await executeApiBrige(apiPath, method, body);
+  await loaders.responses.clear(args.responseId);
+  await loaders.responses.load(args.responseId);
+  return response.message;
 };
+
 
 const removeResponse = async (_, args, { loaders }) => {
   logger.info(
     `Execute MUTATION: removeResponse | params: ${JSON.stringify(args)}`
   );
-
   const { apiPath, method } = apiTranslator.removeResponse(args.responseId);
-
-  return await executeApiBrige(apiPath, method, {}, (res) => {
-    if (res.status == 200) {
-      loaders.responses.clear(args.responseId);
-    }
-
-    return res.message;
-  });
+  const response = await executeApiBrige(apiPath, method, {});
+  await loaders.responses.clear(args.responseId);
+  return response.message;
 };
+
 
 const assignResponseToApi = async (_, args, { loaders }) => {
   logger.info(
@@ -70,17 +62,12 @@ const assignResponseToApi = async (_, args, { loaders }) => {
     method: args.method,
   };
 
-  const callback = async (res) => {
-    if (res.status == 200) {
-      const responseObj = await dal.searchAResponse(args.responseId);
-      await loaders.responses.prime(args.responseId, responseObj);
-    }
-
-    return res.message;
-  };
-
-  return await executeApiBrige(apiPath, method, body, callback);
+  const response = await executeApiBrige(apiPath, method, body);
+  await loaders.responses.clear(args.responseId);
+  await loaders.responses.load(args.responseId);
+  return response.message;
 };
+
 
 const exportResponseJSON = async (_, { fileName, response }) => {
   logger.info(
