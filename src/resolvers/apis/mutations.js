@@ -49,7 +49,6 @@ const removeAPI = async (_, args, { loaders }) => {
   return await executeApiBrige(apiPath, method, {}, callback);
 };
 
-// start api
 const startAPI = async (_, args, { loaders }) => {
   logger.info(`Execute MUTATION: startAPI | params: ${JSON.stringify(args)}`);
   const { apiPath, method } = apiTranslator.startApi(args.apiId);
@@ -64,7 +63,6 @@ const startAPI = async (_, args, { loaders }) => {
   return await executeApiBrige(apiPath, method, {}, callback);
 };
 
-// stop api
 const stopAPI = async (_, args, { loaders }) => {
   logger.info(`Execute MUTATION: stopAPI | params: ${JSON.stringify(args)}`);
   const { apiPath, method } = apiTranslator.stopApi(args.apiId);
