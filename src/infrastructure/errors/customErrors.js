@@ -1,3 +1,5 @@
+import { ApolloError } from "apollo-server-errors";
+
 class DatabaseError extends Error {
   constructor(message) {
     super(message);
@@ -16,8 +18,29 @@ class NoFoundError extends Error {
   }
 }
 
+class LegacyErrorSystem extends Error {
+  constructor(message) {
+    super(message);
+  }
+}
+
+class LegacyBadRequestError extends Error {
+  constructor(message) {
+    super(message);
+  }
+}
+
+class GatewayError extends ApolloError {
+  constructor(message) {
+    super(message, "GATEWAY_ERROR");
+  }
+}
+
 export const errors = {
   DatabaseError,
   ResponseError,
   NoFoundError,
+  LegacyErrorSystem,
+  LegacyBadRequestError,
+  GatewayError,
 };
