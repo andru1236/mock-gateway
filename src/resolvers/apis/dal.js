@@ -21,7 +21,11 @@ const searchAnApi = async (apiIds) => {
   return await dbc.apis.find({ _id: { $in: listObjectIds } }).toArray();
 };
 
+const countApis = async () => await dbc.apis.countDocuments({});
+
+
 export default {
   searchAllApis: withErrorHandler(searchAllApis),
   searchAnApi: withErrorHandler(searchAnApi),
+  countApis: withErrorHandler(countApis),
 };

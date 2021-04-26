@@ -12,7 +12,11 @@ const apis = async (_, { limit, next }) => {
   return await dal.searchAllApis(limit, next);
 };
 
+const countApis = async () => await dal.countApis();
+
+
 export default {
   api,
   apis,
+  countApis
 };
