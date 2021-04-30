@@ -1,7 +1,7 @@
 import { dbc, ObjectId, withErrorHandler, logger } from "../../infrastructure";
 
 const searchAllApis = async (limit = null, next = 0) => {
-  logger.debug(`Calling to db -> get all responses`);
+  logger.debug(`Calling to db -> get all apis`);
   if (limit !== null) {
     return await dbc.apis.find({})
       .skip(next)
