@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+
+message EntityId {
+    string id = 1;
+}
+
+message DbAgent {
+    string dbAgent=1;
+}
+
+
+message Response {
+    bool sucessfull = 1;
+    string message = 2;
+}
+
+service Simulator {
+    rpc startDeviceSimulation(EntityId) returns (Response);
+    rpc stopDeviceSimulation(EntityId) returns (Response);
+    rpc fixDbAgent(DbAgent) returns (DbAgent);
+}

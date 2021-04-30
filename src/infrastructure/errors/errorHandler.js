@@ -1,6 +1,8 @@
+import { ApolloError } from "apollo-server-errors";
 import { errors } from "./customErrors";
 import { logger } from "../logger";
 
+// TODO: Segregate the error handler based on the architecture layer
 export const errorHandler = (error) => {
   logger.error(error.message);
   if (error instanceof errors.DatabaseError) {
@@ -21,9 +23,12 @@ export const errorHandler = (error) => {
   if (error instanceof errors.LegacyErrorSystem) {
     throw new error.GatewayError(error.message);
   }
+  if (error instanceof errors.SimulatorError) {
+    return false;
+  }
   if (error instanceof Error) {
     logger.error(`Critical ${error.message}`);
-    throw error;
+    throw new ApolloError(error.message, "ERROR_APOLLO");
   }
 };
 

@@ -36,6 +36,12 @@ class GatewayError extends ApolloError {
   }
 }
 
+class SimulatorError extends Error {
+  constructor(message) {
+    super(message, "SIMULATOR_ERRORS")
+  }
+}
+
 export const errors = {
   DatabaseError,
   ResponseError,
@@ -43,4 +49,5 @@ export const errors = {
   LegacyErrorSystem,
   LegacyBadRequestError,
   GatewayError,
+  SimulatorError
 };

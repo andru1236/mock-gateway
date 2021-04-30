@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/andru1236/mock-gateway#readme",
   "dependencies": {
+    "@grpc/proto-loader": "^0.6.1",
     "apollo-server": "^2.21.1",
     "apollo-server-express": "^2.21.1",
     "body-parser": "^1.19.0",
@@ -30,6 +31,7 @@
     "graphql-tag": "^2.11.0",
     "graphql-tools": "^7.0.4",
     "graphql-type-json": "^0.3.2",
+    "grpc": "^1.24.3",
     "mongodb": "^3.6.5",
     "node-fetch": "^2.6.1",
     "winston": "^3.3.3",

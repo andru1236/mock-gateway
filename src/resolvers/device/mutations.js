@@ -1,3 +1,9 @@
+import {
+  grpcStopSimulation,
+  grpcStartSimulation,
+  grpcFixDbAgent,
+} from "../../infrastructure/protocol_buffer/simulator_client";
+
 import { logger } from "../../infrastructure";
 import dal from "./dal";
 
@@ -25,8 +31,26 @@ const removeDevice = async (_, args, { loaders }) => {
   return true;
 };
 
+const startSimulation = async (_, { deviceId }) => {
+  logger.info("Executing MUTATION| startSimulation");
+  return await grpcStartSimulation(deviceId);
+};
+
+const stopSimulation = async (_, { deviceId }) => {
+  logger.info("Executing MUTATION| stopSimulation");
+  return await grpcStopSimulation(deviceId);
+};
+
+const fixAgentDb = async (_, { agentDb }) => {
+  logger.info("Executing MUTATION| fixAgent");
+  return await grpcFixDbAgent(agentDb);
+};
+
 export default {
   createDevice,
   updateDevice,
   removeDevice,
+  startSimulation,
+  stopSimulation,
+  fixAgentDb,
 };
