@@ -18,8 +18,8 @@ const updateDevice = async (_, args, { loaders }) => {
   logger.info("Executing MUTATION| UpdateDevice");
   const { deviceId, name, port, agentDb } = args;
   await dal.updateDevice(deviceId, name, port, agentDb);
-  const deviceObj = await dal.searchOneDevice(deviceId);
-  await loaders.devices.prime(deviceId, deviceObj[0]);
+  await loaders.devices.clear(args.deviceId);
+  await loaders.devices.load(args.deviceId);
   return true;
 };
 
@@ -33,7 +33,9 @@ const removeDevice = async (_, args, { loaders }) => {
 
 const startSimulation = async (_, { deviceId }) => {
   logger.info("Executing MUTATION| startSimulation");
-  return await grpcStartSimulation(deviceId);
+  const response = await grpcStartSimulation(deviceId);
+  logger.info(`Resolved response [${response}]`);
+  return response;
 };
 
 const stopSimulation = async (_, { deviceId }) => {
@@ -43,7 +45,9 @@ const stopSimulation = async (_, { deviceId }) => {
 
 const fixAgentDb = async (_, { agentDb }) => {
   logger.info("Executing MUTATION| fixAgent");
-  return await grpcFixDbAgent(agentDb);
+  const response = await grpcFixDbAgent(agentDb);
+  logger.info(`Resolved response [${response}]`);
+  return response;
 };
 
 export default {
