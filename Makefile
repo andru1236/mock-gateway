@@ -1,22 +1,23 @@
 # Docker
-IMAGE_NAME?=mock-gql
-CONTAINER_NAME?=mock-gql-container
+IMAGE_NAME_GQL?=mock-gql
+CONTAINER_NAME_GQL?=mock-gql-container
 
 
 start:
 	docker-compose -f docker/docker-compose.yml up 
-	# docker run --rm -v ${PWD}:/workspace ${IMAGE_NAME}
+	# docker run --rm -v ${PWD}:/workspace ${IMAGE_NAME_GQL}
 	
 build:
 	docker-compose -f docker/docker-compose.yml build --no-cache
-	# docker build --no-cache -t ${IMAGE_NAME} -f docker/Dockerfile .
+	# docker build --no-cache -t ${IMAGE_NAME_GQL} -f docker/Dockerfile .
 
 clean:
-	docker rm ${CONTAINER_NAME}
-	docker rmi ${IMAGE_NAME}
+	# docker rm ${CONTAINER_NAME_GQL}
+	docker-compose -f docker/docker-compose.yml down
+	docker rmi ${IMAGE_NAME_GQL}
 
 shell:
-	docker exec -it $(CONTAINER_NAME) bash
+	docker exec -it $(CONTAINER_NAME_GQL) bash
 	#docker run --rm -it -v ${PWD}:/workspace ${IMAGE_NAME} bash
 
 docker-start:

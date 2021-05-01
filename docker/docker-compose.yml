@@ -11,8 +11,8 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile
-    image: ${IMAGE_NAME}
-    container_name: ${CONTAINER_NAME}
+    image: ${IMAGE_NAME_GQL}
+    container_name: ${CONTAINER_NAME_GQL}
     ports:
       - ${GQL_PORT}:${GQL_PORT}
     volumes:
@@ -21,6 +21,7 @@ services:
       - mongo-db
     networks:
       - app-network
+      
     command: ["npm", "start"]
 
   mongo-db:
@@ -29,3 +30,5 @@ services:
       - 27017:27017
     networks:
       - app-network
+    volumes:
+      - ../../mongodata:/data/db
