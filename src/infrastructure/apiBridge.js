@@ -4,7 +4,7 @@ import { errorHandler, errors, errorInfo } from "./errors";
 import { logger } from "./logger";
 
 readEnv();
-const REST_API_URL = process.env.BASE_BACKEND_URL;
+const REST_API_URL = process.env.REST_API_URL;
 
 const responseHandler = async (rawResponse, method) => {
   logger.debug(`responseHandler, transform raw response -> cleaned response`);
