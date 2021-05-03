@@ -15,8 +15,6 @@ services:
     container_name: ${CONTAINER_NAME_GQL}
     ports:
       - ${GQL_PORT}:${GQL_PORT}
-    volumes:
-      - ../src:/workspace/src
     depends_on:
       - mongo-db
     networks:
