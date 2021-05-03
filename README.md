@@ -16,6 +16,13 @@ Make build
 Make start
 ```
 
+## Without docker:
+```bash
+yarn
+yarn start
+# Run Docker in port 27017
+```
+
 ```gql
 GraphQL queries to test
 -----------------------
